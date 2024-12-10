@@ -191,23 +191,23 @@ const Alarm = () => {
                     : item
             )
         );
-
+    
         if (!alarm.enabled) {
             // Re-enable the alarm
             const date = new Date();
             const currentHr = date.getHours();
             const currentMin = date.getMinutes();
             const currentSec = date.getSeconds();
-
+    
             let diff =
                 alarm.hr * 3600 +
                 alarm.min * 60 -
                 (currentHr * 3600 + currentMin * 60 + currentSec);
-
+    
             if (diff < 0) {
                 diff += 24 * 3600; // Adjust to next day if negative
             }
-
+    
             scheduleAlarm(alarm, diff);
         } else {
             // Disable the alarm (cancel the timer)
@@ -295,57 +295,58 @@ const Alarm = () => {
             </form>
 
             <div className="alarm-list">
-                <h3 className="alarm-list-heading">Scheduled Alarms:</h3>
+            <h3 className="alarm-list-heading">Scheduled Alarms:</h3>
 
-                {alarmDetails.map((alarm, index) => (
-                    <div key={index} className="single-alarm">
-                        <h4 className="alarm-name">Alarm {index + 1}</h4>
-                        <div className="alarm-info">
-                            <p>
-                                {alarm.hr}:
-                                {alarm.min.toString().padStart(2, "0")}{" "}
-                                {alarm.ampm}{" "}
-                                {alarm.enabled
-                                    ? "(Enabled)"
-                                    : alarm.snoozed
-                                    ? "(Snoozed)"
-                                    : "(Disabled)"}
-                            </p>
+            {alarmDetails.map((alarm, index) => (
+                <div key={index} className="single-alarm">
+                    <h4 className="alarm-name">Alarm {index + 1}</h4>
+                    <div className="alarm-info">
+                        <p>
+                            {alarm.hr}:
+                            {alarm.min.toString().padStart(2, "0")}{" "}
+                            {alarm.ampm}{" "}
+                            {alarm.enabled
+                                ? "(Enabled)"
+                                : alarm.snoozed
+                                ? "(Snoozed)"
+                                : "(Disabled)"}
+                        </p>
 
-                            {/* Toggle between Disable/Enable button */}
-                            <div className="toggle-button">
-                                <input
-                                    type="checkbox"
-                                    id={`toggle-${index}`}
-                                    checked={alarm.enabled}
-                                    onChange={() => toggleAlarm(index)}
-                                />
-                                <label htmlFor={`toggle-${index}`}></label>
-                            </div>
+                        {/* Toggle between Disable/Enable button */}
+                        <div className="toggle-button">
+                            <input
+                                type="checkbox"
+                                id={`toggle-${index}`}
+                                checked={alarm.enabled || alarm.snoozed} // Enable if snoozed
+                                onChange={() => toggleAlarm(index)}
+                            />
+                            <label htmlFor={`toggle-${index}`}></label>
                         </div>
-
-                        <button onClick={() => cancelAlarm(index)} className="cancel-alarm-button">
-                        <i className="ri-close-circle-fill"></i>
-                        </button>
                     </div>
-                ))}
-            </div>
 
-            {/* Display active alarm notification */}
-            {activeAlarm && (
-                <div className="notification">
-                    <h3>Alarm Ringing!</h3>
-                    <p>
-                        {activeAlarm.hr}:
-                        {activeAlarm.min.toString().padStart(2, "0")}{" "}
-                        {activeAlarm.ampm}
-                    </p>
-                    <button onClick={stopAlarm}>Stop</button>
-                    <button onClick={snoozeAlarm}>Snooze</button>
+                    <button onClick={() => cancelAlarm(index)} className="cancel-alarm-button">
+                        <i className="ri-close-circle-fill"></i>
+                    </button>
                 </div>
-            )}
+            ))}
         </div>
-    );
+
+        {/* Display active alarm notification */}
+        {activeAlarm && (
+            <div className="notification">
+                <h3>Alarm Ringing!</h3>
+                <p>
+                    {activeAlarm.hr}:
+                    {activeAlarm.min.toString().padStart(2, "0")}{" "}
+                    {activeAlarm.ampm}
+                </p>
+                <button onClick={stopAlarm}>Stop</button>
+                <button onClick={snoozeAlarm}>Snooze</button>
+            </div>
+        )}
+    </div>
+);
+
 };
 
 export default Alarm;
