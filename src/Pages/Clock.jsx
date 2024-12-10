@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "../Components/Clock.css";
 
@@ -13,17 +13,21 @@ const Clock = () => {
         })
     );
 
-    setTimeout(() => {
-        setTime(new Date().toLocaleTimeString());
-        setDate(
-            new Date().toLocaleDateString("en-US", {
-                weekday: "long",
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-            })
-        );
-    }, 1000);
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setTime(new Date().toLocaleTimeString());
+            setDate(
+                new Date().toLocaleDateString("en-US", {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                })
+            );
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, []);
 
     return (
         <div className="clock-container">

@@ -3,7 +3,8 @@
     justify-content: center;
     align-items: center;
     height: 90vh;
-    gap: 5rem;
+    gap: 3rem;
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
 }
 
 .stopwatch-left {
@@ -14,6 +15,8 @@
     background-color: var(--container-color);
     padding: 2rem;
     border-radius: 12px;
+    width: 100%;
+    max-width: 650px; 
 }
 
 .stopwatch-right {
@@ -23,6 +26,8 @@
     justify-content: flex-start;
     overflow-y: auto;
     max-height: 100%;
+    width: 100%;
+    max-width: 600px;
 }
 
 /* Stopwatch Time Display */
@@ -38,6 +43,7 @@
 .buttons {
     display: flex;
     gap: 1rem;
+    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
 }
 
 .buttons button {
@@ -50,6 +56,7 @@
     border-radius: 8px;
     cursor: pointer;
     transition: var(--transition);
+    min-width: 120px; /* Ensure buttons have a minimum width */
 }
 
 .buttons button:hover {
@@ -64,7 +71,7 @@
 
 /* Laps Table */
 table {
-    table-layout: fixed; /* Fix column widths to prevent resizing */
+    table-layout: fixed;
     width: 100%;
     max-width: 600px;
     border-collapse: collapse;
@@ -78,7 +85,7 @@ table {
 }
 
 table thead {
-    position: sticky; /* Sticky header for scrolling */
+    position: sticky;
     top: 0;
     z-index: 1;
     background-color: var(--first-color);
@@ -99,21 +106,19 @@ table tbody tr:hover {
 }
 
 table thead th {
-    width: auto; /* Ensure the widths respect inline styles */
-    text-align: left;
+    width: auto;
 }
 
 table tbody td {
-    word-wrap: break-word; /* Handle long content gracefully */
+    word-wrap: break-word;
 }
 
 /* Placeholder Row Styling */
 table tbody tr td {
-    text-align: center; /* Center align the placeholder text */
-    color: var(--text-color-light); /* Use a lighter text color */
-    font-style: italic; /* Optional: Add italics for differentiation */
+    text-align: center;
+    color: var(--text-color-light);
+    font-style: italic;
 }
-
 
 table tbody tr:last-child td {
     border-bottom: none;
@@ -133,25 +138,18 @@ table tbody td {
     border: 1px solid var(--border-color);
     border-radius: 8px;
     background-color: var(--container-color);
-    max-height: 60vh; /* Limit height for scrolling */
-    max-width: 700px; /* Define the maximum width */
-    overflow-y: auto; /* Enable vertical scrolling */
-    overflow-x: auto; /* Enable horizontal scrolling for smaller screens */
-    scrollbar-width: thin; /* Modern browsers (Firefox) */
-    scrollbar-color: var(--text-color-light) var(--border-color);
+    max-height: 60vh;
+    overflow-y: auto;
 }
-
 
 /* Scrollable Table Body */
 .table-body-wrapper {
-    max-height: 250px; /* Set a fixed height for the body */
-    overflow-y: auto; /* Enable vertical scrolling */
-    scrollbar-width: thin; /* Firefox scrollbar styling */
-    scrollbar-color: var(--text-color-light) var(--border-color);
+    max-height: 250px;
+    overflow-y: auto;
 }
 
 .table-body-wrapper::-webkit-scrollbar {
-    width: 8px; /* Width for vertical scrollbar */
+    width: 8px;
 }
 
 .table-body-wrapper::-webkit-scrollbar-thumb {
@@ -166,4 +164,55 @@ table tbody td {
 .table-body-wrapper::-webkit-scrollbar-track {
     background-color: var(--border-color);
     border-radius: 4px;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+    .stop-watch-time {
+        font-size: 3rem;
+    }
+
+    .buttons button {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .stopwatch-container {
+        gap: 2rem;
+        flex-direction: column;
+    }
+
+    .stopwatch-left {
+        width: 100%;
+        max-width: 96%;
+    }
+
+    .stopwatch-right {
+        max-width: 96%;
+    }
+
+    .buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .stop-watch-time {
+        font-size: 2.5rem;
+    }
+
+    .buttons button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+
+    table th,
+    table td {
+        padding: 0.5rem 0.75rem;
+    }
+
+    .table-body-wrapper {
+        max-height: 200px;
+    }
 }

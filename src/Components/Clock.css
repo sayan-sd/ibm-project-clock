@@ -3,30 +3,32 @@
     src: url(../../digital-7/digital-7.ttf);
 }
 
-.clock-container{
+.clock-container {
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     height: 90vh;
+    padding: 2rem;
 }
 
-.motivation-line{
+.motivation-line {
     color: var(--first-color-lighten);
     font-size: 1.5rem;
     text-transform: uppercase;
     font-weight: 500;
+    margin-bottom: 1rem;
 }
 
-.clock{
+.clock {
     font-size: 300px;
     font-family: clockFontFamily;
     line-height: 300px;
     color: var(--second-color);
 }
 
-.date-display{
+.date-display {
     color: var(--text-color-light);
     font-size: 2rem;
     margin-top: 1rem;
@@ -34,15 +36,16 @@
     font-weight: 600;
 }
 
-.navigation-buttons{
+.navigation-buttons {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin-top: 2.5rem;
     gap: 2rem;
+    width: 100%;
 }
 
-.nav-button{
+.nav-button {
     background-color: transparent;
     color: var(--text-color);
     border: 2px solid var(--border-color);
@@ -60,8 +63,54 @@
     letter-spacing: 1px;
 }
 
-.nav-button:hover{
+.nav-button:hover {
     background-color: var(--first-color-light);
     color: #fff;
     border-color: var(--first-color);
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+    .clock {
+        font-size: 150px; /* Smaller clock size on mobile */
+        line-height: 150px;
+    }
+
+    .date-display {
+        font-size: 1.5rem; /* Smaller date size on mobile */
+    }
+
+    .navigation-buttons {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .nav-button {
+        font-size: 1rem; /* Smaller font size for buttons */
+        padding: 0.8rem 1.5rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .clock {
+        font-size: 120px; /* Even smaller clock size on very small screens */
+        line-height: 120px;
+    }
+
+    .date-display {
+        font-size: 1.2rem; /* Further reduce date size on very small screens */
+    }
+
+    .motivation-line {
+        font-size: 1.2rem; /* Slightly smaller motivation text */
+    }
+
+    .navigation-buttons {
+        gap: 1rem;
+    }
+
+    .nav-button {
+        font-size: 0.9rem; /* Further reduce button font size */
+        padding: 0.6rem 1.2rem;
+    }
 }
