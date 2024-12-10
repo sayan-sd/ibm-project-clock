@@ -7,14 +7,15 @@ const Alarm = () => {
     const [activeAlarm, setActiveAlarm] = useState(null); // Tracks the ringing alarm
     const [audioInstance, setAudioInstance] = useState(null); // Tracks the alarm sound instance
     const [timers, setTimers] = useState([]); // Stores alarm timer IDs
-    
+
     const [hour, setHour] = useState("");
     const [minute, setMinute] = useState("");
 
     const handleHourChange = (event) => {
         const value = event.target.value;
-    
-        if (/^\d{0,2}$/.test(value)) { // Allow up to 2 digits
+
+        if (/^\d{0,2}$/.test(value)) {
+            // Allow up to 2 digits
             if (value === "" || (Number(value) >= 1 && Number(value) <= 12)) {
                 setHour(value); // Only update if within range
             } else if (value.length === 2 && value[0] === "0") {
@@ -22,11 +23,12 @@ const Alarm = () => {
             }
         }
     };
-    
+
     const handleMinuteChange = (event) => {
         const value = event.target.value;
-    
-        if (/^\d{0,2}$/.test(value)) { // Allow up to 2 digits
+
+        if (/^\d{0,2}$/.test(value)) {
+            // Allow up to 2 digits
             if (value === "" || (Number(value) >= 0 && Number(value) <= 59)) {
                 setMinute(value); // Only update if within range
             } else if (value.length === 2 && value[0] === "0") {
@@ -34,7 +36,6 @@ const Alarm = () => {
             }
         }
     };
-    
 
     const submitHandler = (event) => {
         event.preventDefault();
@@ -94,9 +95,9 @@ const Alarm = () => {
         // Schedule the alarm
         scheduleAlarm(alarmTime, diff);
 
-         // Clear the inputs
-         setHour("");
-         setMinute("");
+        // Clear the inputs
+        setHour("");
+        setMinute("");
         // Clear the form after setting the alarm
         event.target[0].value = ""; // Clear hour input
         event.target[1].value = ""; // Clear minute input
@@ -233,69 +234,102 @@ const Alarm = () => {
     };
 
     return (
-        <div>
-            <form action="#" onSubmit={submitHandler}>
-                <input
-                    type="number"
-                    name="hr"
-                    id="hr"
-                    placeholder="Hour"
-                    value={hour}
-                    onChange={handleHourChange}
-                    min="1"
-                    max="12"
-                    required
-                />
-                <input
-                    type="number"
-                    name="min"
-                    id="min"
-                    placeholder="Minute"
-                    value={minute}
-                    onChange={handleMinuteChange}
-                    min="0"
-                    max="59"
-                    required
-                />
-                <label>
-                    <input type="radio" name="format" id="am" required /> AM
-                </label>
-                <label>
-                    <input type="radio" name="format" id="pm" required /> PM
-                </label>
-                <button type="submit">Set Alarm</button>
-            </form>
+        <div className="alarm-container">
+            <form
+                action="#"
+                onSubmit={submitHandler}
+                className="set-alarm-form"
+            >
+                <div className="form-first-row">
+                    <input
+                        type="number"
+                        name="hr"
+                        id="hr"
+                        placeholder="00"
+                        value={hour}
+                        onChange={handleHourChange}
+                        min="1"
+                        max="12"
+                        required
+                    />
+                    <small className="colon">:</small>
+                    <input
+                        type="number"
+                        name="min"
+                        id="min"
+                        placeholder="00"
+                        value={minute}
+                        onChange={handleMinuteChange}
+                        min="0"
+                        max="59"
+                        required
+                    />
+                    <div className="set-am-pm">
+                        <input
+                            type="radio"
+                            name="format"
+                            id="am"
+                            className="am-pm-input"
+                        />
+                        <label htmlFor="am" className="am-pm-label">
+                            AM
+                        </label>
 
-            <h3>Scheduled Alarms:</h3>
-            {alarmDetails.map((alarm, index) => (
-                <div key={index}>
-                    <h4>Alarm {index + 1}</h4>
-                    <p>
-                        {alarm.hr}:{alarm.min.toString().padStart(2, "0")}{" "}
-                        {alarm.ampm}{" "}
-                        {alarm.enabled
-                            ? "(Enabled)"
-                            : alarm.snoozed
-                            ? "(Snoozed)"
-                            : "(Disabled)"}
-                    </p>
+                        <input
+                            type="radio"
+                            name="format"
+                            id="pm"
+                            className="am-pm-input"
+                        />
+                        <label htmlFor="pm" className="am-pm-label">
+                            PM
+                        </label>
+                    </div>
+                </div>
 
-                    {/* Toggle between Disable/Enable button */}
-                    {alarm.snoozed || alarm.enabled ? (
-                        <button onClick={() => toggleAlarm(index)}>
-                            Disable
-                        </button>
-                    ) : (
-                        <button onClick={() => toggleAlarm(index)}>
-                            Enable
-                        </button>
-                    )}
-
-                    <button onClick={() => cancelAlarm(index)}>
-                        Cancel Alarm
+                <div className="submit-button-div">
+                    <button type="submit" className="submit-button">
+                        Set Alarm
                     </button>
                 </div>
-            ))}
+            </form>
+
+            <div className="alarm-list">
+                <h3 className="alarm-list-heading">Scheduled Alarms:</h3>
+
+                {alarmDetails.map((alarm, index) => (
+                    <div key={index} className="single-alarm">
+                        <h4 className="alarm-name">Alarm {index + 1}</h4>
+                        <div className="alarm-info">
+                            <p>
+                                {alarm.hr}:
+                                {alarm.min.toString().padStart(2, "0")}{" "}
+                                {alarm.ampm}{" "}
+                                {alarm.enabled
+                                    ? "(Enabled)"
+                                    : alarm.snoozed
+                                    ? "(Snoozed)"
+                                    : "(Disabled)"}
+                            </p>
+
+                            {/* Toggle between Disable/Enable button */}
+                            <div className="toggle-button">
+                                <input
+                                    type="checkbox"
+                                    id={`toggle-${index}`}
+                                    checked={alarm.enabled}
+                                    onChange={() => toggleAlarm(index)}
+                                />
+                                <label htmlFor={`toggle-${index}`}></label>
+                            </div>
+                        </div>
+
+                        <button onClick={() => cancelAlarm(index)} className="cancel-alarm-button">
+                        <i className="ri-close-circle-fill"></i>
+                        </button>
+                    </div>
+                ))}
+            </div>
 
             {/* Display active alarm notification */}
             {activeAlarm && (

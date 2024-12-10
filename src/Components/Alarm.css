@@ -1,115 +1,250 @@
+.alarm-container{
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    gap: 40px;
+}
 
-
-/* Container Styling */
-form,
-.alarm-list {
+.set-alarm-form{
     padding: 25px;
     border-radius: 15px;
-    background: linear-gradient(145deg, #23253a, #1e1f33);
-    box-shadow: 6px 6px 15px #0f0f1f, -6px -6px 15px #2c2e48;
-    margin-top: 5%;
+    background-color: var(--container-color);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    color: var(--text-color);
 }
 
-form {
-    width: 35%;
-    margin-left: 2%;
+.form-first-row{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
 }
 
-.alarm-list {
-    width: 55%;
-    margin-right: 2%;
-}
-
-h3 {
-    font-size: 1.5em;
-    margin-bottom: 15px;
-    font-weight: 600;
-}
-
-/* Form Styles */
 form input[type="number"] {
     width: 70px;
-    margin-right: 10px;
+    height: 60px;
     padding: 10px;
     border: none;
     border-radius: 10px;
-    background: #1a1b29;
-    color: #fff;
+    background: var(--body-color);
+    color: var(--text-color);
     text-align: center;
-    box-shadow: inset 3px 3px 8px #0f0f1f, inset -3px -3px 8px #2c2e48;
+    /* box-shadow: rgb(126, 124, 124) 0px 0px 10px 5px inset; */
     font-size: 1em;
     font-weight: bold;
 }
 
-form label {
-    font-size: 1.2em;
-    font-weight: 500;
-    margin-right: 10px;
-    display: inline-block;
+form input[type="number"]::placeholder{
+    opacity: 0.5;
 }
 
-form button {
-    padding: 10px 20px;
-    font-size: 1em;
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+
+.colon{
+    font-size: 2rem;
+    margin: 0 12px;
+    color: var(--text-color);
+    font-weight: 800;
+}
+
+.set-am-pm{
+    display: flex;
+    flex-direction: column;
+    margin-left: 25px;
+    border: 3px solid var(--border-color);
+}
+
+.am-pm-label{
+    display: block;
+    padding: 5px 10px;
+    text-align: center;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
     font-weight: 600;
-    color: #fff;
-    background: linear-gradient(145deg, #3c3f60, #323450);
+}
+
+.am-pm-input{
+    display: none;
+}
+
+.am-pm-input:checked + .am-pm-label {
+    background-color: var(--first-color-lighten); /* Set your desired background color */
+    color: white; /* Adjust text color */
+    border-color: var(--border-color); /* Optional: Change border color */
+    transition: all 0.3s;
+}
+
+/* Optional: Add hover effect */
+.am-pm-label:hover {
+    color: var(--title-color); /* Light hover effect */
+}
+
+.submit-button-div{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.submit-button {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--first-color-light);
+    background: none;
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    box-shadow: 4px 4px 10px #1b1c2b, -4px -4px 10px #444a6b;
-    transition: all 0.3s ease;
+    text-align: right;
+    transition: all 0.3s;
+    word-spacing: 3px;
 }
 
-form button:hover {
-    background: linear-gradient(145deg, #4b4e7a, #393d5c);
-    box-shadow: 2px 2px 6px #1b1c2b, -2px -2px 6px #444a6b;
+.submit-button:hover {
+    scale: 0.97;
 }
+
+
+
+
+/* Form Styles */
+
 
 /* Alarm List */
-.alarm-list div {
-    padding: 15px;
+.alarm-list-heading{
+    font-size: 1.5em;
     margin-bottom: 15px;
+    font-weight: 600;
+    color: var(--title-color);
+}
+
+.alarm-list {
+    max-height: 500px;
+    overflow-y: scroll;
+    padding: 15px;
+}
+
+/* Custom Scrollbar Styles */
+.alarm-list::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+}
+
+.alarm-list::-webkit-scrollbar-thumb {
+    background-color: var(--first-color-alt); /* Scrollbar thumb color */
+    border-radius: 4px; /* Rounded corners for the scrollbar thumb */
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); /* Shadow effect */
+}
+
+.alarm-list::-webkit-scrollbar-thumb:hover {
+    background-color: #0056b3; /* Darker shade when hovered */
+}
+
+.alarm-list::-webkit-scrollbar-track {
+    background-color: var(--border-color); /* Scrollbar track color */
+    border-radius: 4px; /* Rounded corners for the track */
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+}
+
+
+.single-alarm{
+    display: flex;
+    justify-content: center;
+    align-items: st;
+    flex-direction: column;
+    position: relative;
+    padding: 10px;
     border-radius: 10px;
-    background: linear-gradient(145deg, #23253a, #1e1f33);
-    box-shadow: 3px 3px 8px #0f0f1f, -3px -3px 8px #2c2e48;
+    background: var(--container-color);
+    color: var(--text-color);
+    margin-top: 10px;
+    min-width: 300px;
+}
+
+
+.alarm-info {
+    margin-top: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.alarm-list span {
-    font-size: 1.2em;
-    font-weight: bold;
-    color: #ffffff;
-}
-
-.alarm-list button {
-    padding: 8px 15px;
-    font-size: 0.9em;
-    margin-left: 5px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
     font-weight: 600;
-    color: #fff;
-    background: linear-gradient(145deg, #3c3f60, #323450);
-    box-shadow: 3px 3px 8px #1b1c2b, -3px -3px 8px #444a6b;
+}
+
+.alarm-name{
+    color: var(--title-color);
+}
+
+.toggle-button {
+    display: inline-block;
+    position: relative;
+    width: 50px;
+    height: 25px;
+    margin-left: 5px;
+}
+
+.toggle-button input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-button label {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 12.5px;
+    transition: background-color 0.3s;
+}
+
+.toggle-button label::before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 2.5px;
+    bottom: 2.5px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
+
+.toggle-button input:checked + label {
+    background-color: var(--second-color);
+}
+
+.toggle-button input:checked + label::before {
+    transform: translateX(25px);
+}
+
+.cancel-alarm-button{
+    all: unset;
+    position: absolute;
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    cursor: pointer;
+    color: var(--first-color-lighten);
     transition: all 0.3s ease;
+    top: 5px;
+    right: 10px;
 }
 
-.alarm-list button:nth-child(1) {
-    background: linear-gradient(145deg, #4caf50, #3e8c42); /* Green */
+.cancel-alarm-button i{
+    font-size: 20px;
+    font-weight: 800;
 }
 
-.alarm-list button:nth-child(2) {
-    background: linear-gradient(145deg, #e53935, #c62828); /* Red */
-}
 
-.alarm-list button:hover {
-    box-shadow: 2px 2px 6px #1b1c2b, -2px -2px 6px #444a6b;
-    opacity: 0.9;
-}
 
 /* Alarm Ringing Popup */
 .notification {
