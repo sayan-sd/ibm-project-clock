@@ -7,7 +7,34 @@ const Alarm = () => {
     const [activeAlarm, setActiveAlarm] = useState(null); // Tracks the ringing alarm
     const [audioInstance, setAudioInstance] = useState(null); // Tracks the alarm sound instance
     const [timers, setTimers] = useState([]); // Stores alarm timer IDs
+    
+    const [hour, setHour] = useState("");
+    const [minute, setMinute] = useState("");
 
+    const handleHourChange = (event) => {
+        const value = event.target.value;
+    
+        if (/^\d{0,2}$/.test(value)) { // Allow up to 2 digits
+            if (value === "" || (Number(value) >= 1 && Number(value) <= 12)) {
+                setHour(value); // Only update if within range
+            } else if (value.length === 2 && value[0] === "0") {
+                setHour(value[1]); // Handle cases like "05" to "5"
+            }
+        }
+    };
+    
+    const handleMinuteChange = (event) => {
+        const value = event.target.value;
+    
+        if (/^\d{0,2}$/.test(value)) { // Allow up to 2 digits
+            if (value === "" || (Number(value) >= 0 && Number(value) <= 59)) {
+                setMinute(value); // Only update if within range
+            } else if (value.length === 2 && value[0] === "0") {
+                setMinute(value[1]); // Handle cases like "09" to "9"
+            }
+        }
+    };
+    
 
     const submitHandler = (event) => {
         event.preventDefault();
@@ -18,13 +45,23 @@ const Alarm = () => {
         const am = event.target[2].checked;
         const pm = event.target[3].checked;
 
+        // Validate inputs: hour should not be greater than 12, and minutes should not be greater than 59
+        if (alarmHr < 1 || alarmHr > 12) {
+            alert("Please enter a valid hour (1-12).");
+            return;
+        }
+        if (alarmMin < 0 || alarmMin > 59) {
+            alert("Please enter a valid minute (0-59).");
+            return;
+        }
+
         // Adjust alarmHr for 24-hour format
-        if (pm && alarmHr === 12) {
-            alarmHr = 12;
-        } else if (am && alarmHr === 12) {
-            alarmHr = 0;
-        } else if (pm) {
+        if (pm && alarmHr !== 12) {
             alarmHr += 12;
+        } else if (am && alarmHr === 12) {
+            alarmHr = 0; // Ensure 12 AM becomes 0
+        } else if (pm && alarmHr === 12) {
+            alarmHr = 12; // Ensure 12 PM stays as 12
         }
 
         // Current Time
@@ -35,7 +72,9 @@ const Alarm = () => {
 
         // Calculate Time Difference in seconds
         let diff =
-            (alarmHr * 3600 + alarmMin * 60) - (currentHr * 3600 + currentMin * 60 + currentSec);
+            alarmHr * 3600 +
+            alarmMin * 60 -
+            (currentHr * 3600 + currentMin * 60 + currentSec);
 
         if (diff < 0) {
             diff += 24 * 3600; // Adjust to next day if negative
@@ -43,7 +82,7 @@ const Alarm = () => {
 
         // Format alarmTime for storage
         const alarmTime = {
-            hr: alarmHr > 12 ? alarmHr - 12 : alarmHr,
+            hr: alarmHr === 0 ? 12 : alarmHr > 12 ? alarmHr - 12 : alarmHr, // Adjust back to 12-hour format for display
             min: alarmMin,
             ampm: alarmHr >= 12 ? "PM" : "AM",
             enabled: true,
@@ -54,6 +93,15 @@ const Alarm = () => {
 
         // Schedule the alarm
         scheduleAlarm(alarmTime, diff);
+
+         // Clear the inputs
+         setHour("");
+         setMinute("");
+        // Clear the form after setting the alarm
+        event.target[0].value = ""; // Clear hour input
+        event.target[1].value = ""; // Clear minute input
+        event.target[2].checked = false; // Uncheck AM radio button
+        event.target[3].checked = false; // Uncheck PM radio button
     };
 
     const scheduleAlarm = (alarm, diff) => {
@@ -74,7 +122,9 @@ const Alarm = () => {
         // Disable the alarm after it rings
         setAlarmDetails((prevDetails) =>
             prevDetails.map((item) =>
-                item.hr === alarm.hr && item.min === alarm.min && item.ampm === alarm.ampm
+                item.hr === alarm.hr &&
+                item.min === alarm.min &&
+                item.ampm === alarm.ampm
                     ? { ...item, enabled: false }
                     : item
             )
@@ -92,7 +142,9 @@ const Alarm = () => {
         // Set the alarm as disabled when stopped
         setAlarmDetails((prevDetails) =>
             prevDetails.map((item) =>
-                item.hr === activeAlarm.hr && item.min === activeAlarm.min && item.ampm === activeAlarm.ampm
+                item.hr === activeAlarm.hr &&
+                item.min === activeAlarm.min &&
+                item.ampm === activeAlarm.ampm
                     ? { ...item, enabled: false }
                     : item
             )
@@ -116,7 +168,9 @@ const Alarm = () => {
 
         setAlarmDetails((prevDetails) =>
             prevDetails.map((item) =>
-                item.hr === snoozeAlarm.hr && item.min === snoozeAlarm.min && item.ampm === snoozeAlarm.ampm
+                item.hr === snoozeAlarm.hr &&
+                item.min === snoozeAlarm.min &&
+                item.ampm === snoozeAlarm.ampm
                     ? { ...item, snoozed: true }
                     : item
             )
@@ -131,7 +185,9 @@ const Alarm = () => {
         const alarm = alarmDetails[index];
         setAlarmDetails((prevDetails) =>
             prevDetails.map((item, i) =>
-                i === index ? { ...item, enabled: !item.enabled, snoozed: false } : item
+                i === index
+                    ? { ...item, enabled: !item.enabled, snoozed: false }
+                    : item
             )
         );
 
@@ -143,7 +199,8 @@ const Alarm = () => {
             const currentSec = date.getSeconds();
 
             let diff =
-                (alarm.hr * 3600 + alarm.min * 60) -
+                alarm.hr * 3600 +
+                alarm.min * 60 -
                 (currentHr * 3600 + currentMin * 60 + currentSec);
 
             if (diff < 0) {
@@ -163,7 +220,9 @@ const Alarm = () => {
 
     const cancelAlarm = (index) => {
         // Cancel the timer for the alarm
-        const timerToCancel = timers.find((t) => t.alarm === alarmDetails[index]);
+        const timerToCancel = timers.find(
+            (t) => t.alarm === alarmDetails[index]
+        );
         if (timerToCancel) {
             clearTimeout(timerToCancel.timerId);
             setTimers(timers.filter((t) => t !== timerToCancel));
@@ -181,6 +240,8 @@ const Alarm = () => {
                     name="hr"
                     id="hr"
                     placeholder="Hour"
+                    value={hour}
+                    onChange={handleHourChange}
                     min="1"
                     max="12"
                     required
@@ -190,6 +251,8 @@ const Alarm = () => {
                     name="min"
                     id="min"
                     placeholder="Minute"
+                    value={minute}
+                    onChange={handleMinuteChange}
                     min="0"
                     max="59"
                     required
@@ -202,37 +265,45 @@ const Alarm = () => {
                 </label>
                 <button type="submit">Set Alarm</button>
             </form>
-    
+
             <h3>Scheduled Alarms:</h3>
             {alarmDetails.map((alarm, index) => (
                 <div key={index}>
                     <h4>Alarm {index + 1}</h4>
                     <p>
-                        {alarm.hr}:{alarm.min.toString().padStart(2, "0")} {alarm.ampm}{" "}
+                        {alarm.hr}:{alarm.min.toString().padStart(2, "0")}{" "}
+                        {alarm.ampm}{" "}
                         {alarm.enabled
                             ? "(Enabled)"
                             : alarm.snoozed
                             ? "(Snoozed)"
                             : "(Disabled)"}
                     </p>
-                    
+
                     {/* Toggle between Disable/Enable button */}
                     {alarm.snoozed || alarm.enabled ? (
-                        <button onClick={() => toggleAlarm(index)}>Disable</button>
+                        <button onClick={() => toggleAlarm(index)}>
+                            Disable
+                        </button>
                     ) : (
-                        <button onClick={() => toggleAlarm(index)}>Enable</button>
+                        <button onClick={() => toggleAlarm(index)}>
+                            Enable
+                        </button>
                     )}
-                    
-                    <button onClick={() => cancelAlarm(index)}>Cancel Alarm</button>
+
+                    <button onClick={() => cancelAlarm(index)}>
+                        Cancel Alarm
+                    </button>
                 </div>
             ))}
-    
+
             {/* Display active alarm notification */}
             {activeAlarm && (
                 <div className="notification">
                     <h3>Alarm Ringing!</h3>
                     <p>
-                        {activeAlarm.hr}:{activeAlarm.min.toString().padStart(2, "0")}{" "}
+                        {activeAlarm.hr}:
+                        {activeAlarm.min.toString().padStart(2, "0")}{" "}
                         {activeAlarm.ampm}
                     </p>
                     <button onClick={stopAlarm}>Stop</button>
@@ -241,7 +312,6 @@ const Alarm = () => {
             )}
         </div>
     );
-    
 };
 
 export default Alarm;
