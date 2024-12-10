@@ -1,0 +1,67 @@
+@font-face {
+    font-family: clockFontFamily;
+    src: url(../../digital-7/digital-7.ttf);
+}
+
+.clock-container{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 90vh;
+}
+
+.motivation-line{
+    color: var(--first-color-lighten);
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.clock{
+    font-size: 300px;
+    font-family: clockFontFamily;
+    line-height: 300px;
+    color: var(--second-color);
+}
+
+.date-display{
+    color: var(--text-color-light);
+    font-size: 2rem;
+    margin-top: 1rem;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.navigation-buttons{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2.5rem;
+    gap: 2rem;
+}
+
+.nav-button{
+    background-color: transparent;
+    color: var(--text-color);
+    border: 2px solid var(--border-color);
+    padding: 1rem 2rem;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: var(--transition);
+    border-radius: 0.5rem;
+    box-shadow: 0 0 5px var(--shadow-color);
+    outline: none;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: var(--h3-font-size);
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.nav-button:hover{
+    background-color: var(--first-color-light);
+    color: #fff;
+    border-color: var(--first-color);
+}

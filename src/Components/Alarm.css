@@ -1,0 +1,167 @@
+
+
+/* Container Styling */
+form,
+.alarm-list {
+    padding: 25px;
+    border-radius: 15px;
+    background: linear-gradient(145deg, #23253a, #1e1f33);
+    box-shadow: 6px 6px 15px #0f0f1f, -6px -6px 15px #2c2e48;
+    margin-top: 5%;
+}
+
+form {
+    width: 35%;
+    margin-left: 2%;
+}
+
+.alarm-list {
+    width: 55%;
+    margin-right: 2%;
+}
+
+h3 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+/* Form Styles */
+form input[type="number"] {
+    width: 70px;
+    margin-right: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background: #1a1b29;
+    color: #fff;
+    text-align: center;
+    box-shadow: inset 3px 3px 8px #0f0f1f, inset -3px -3px 8px #2c2e48;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+form label {
+    font-size: 1.2em;
+    font-weight: 500;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+form button {
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(145deg, #3c3f60, #323450);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 4px 4px 10px #1b1c2b, -4px -4px 10px #444a6b;
+    transition: all 0.3s ease;
+}
+
+form button:hover {
+    background: linear-gradient(145deg, #4b4e7a, #393d5c);
+    box-shadow: 2px 2px 6px #1b1c2b, -2px -2px 6px #444a6b;
+}
+
+/* Alarm List */
+.alarm-list div {
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    background: linear-gradient(145deg, #23253a, #1e1f33);
+    box-shadow: 3px 3px 8px #0f0f1f, -3px -3px 8px #2c2e48;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.alarm-list span {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.alarm-list button {
+    padding: 8px 15px;
+    font-size: 0.9em;
+    margin-left: 5px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(145deg, #3c3f60, #323450);
+    box-shadow: 3px 3px 8px #1b1c2b, -3px -3px 8px #444a6b;
+    transition: all 0.3s ease;
+}
+
+.alarm-list button:nth-child(1) {
+    background: linear-gradient(145deg, #4caf50, #3e8c42); /* Green */
+}
+
+.alarm-list button:nth-child(2) {
+    background: linear-gradient(145deg, #e53935, #c62828); /* Red */
+}
+
+.alarm-list button:hover {
+    box-shadow: 2px 2px 6px #1b1c2b, -2px -2px 6px #444a6b;
+    opacity: 0.9;
+}
+
+/* Alarm Ringing Popup */
+.notification {
+    position: fixed;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 20px;
+    background: linear-gradient(145deg, #e63946, #c92d3a); /* Alert Red */
+    color: #fff;
+    border-radius: 15px;
+    box-shadow: 4px 4px 10px #1b1c2b, -4px -4px 10px #444a6b;
+    animation: popup 0.3s ease-in-out;
+    text-align: center;
+}
+
+.notification h3 {
+    margin-bottom: 15px;
+    font-size: 1.4em;
+    font-weight: 700;
+}
+
+.notification button {
+    padding: 10px 20px;
+    font-size: 1em;
+    margin: 10px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    color: #fff;
+    background: linear-gradient(145deg, #4caf50, #3e8c42); /* Green for Snooze */
+    box-shadow: 3px 3px 8px #1b1c2b, -3px -3px 8px #444a6b;
+}
+
+.notification button:nth-child(3) {
+    background: linear-gradient(145deg, #3f51b5, #3949ab); /* Blue */
+}
+
+.notification button:hover {
+    box-shadow: 2px 2px 6px #1b1c2b, -2px -2px 6px #444a6b;
+    opacity: 0.9;
+}
+
+/* Popup Animation */
+@keyframes popup {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
