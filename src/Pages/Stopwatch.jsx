@@ -74,6 +74,7 @@ const Stopwatch = () => {
 
     return (
         <div className="stopwatch-container">
+            {/* ========== Stopwatch with Buttons ========== */}
             <div className="stopwatch-left">
                 <h1 className="stop-watch-time">{formatTime(time)}</h1>
                 <div className="buttons">
@@ -93,6 +94,7 @@ const Stopwatch = () => {
                 </div>
             </div>
 
+            {/* ============= Laps ================= */}
             <div className="stopwatch-right">
                 <table>
                     <thead>
@@ -106,17 +108,14 @@ const Stopwatch = () => {
                 <div className="table-body-wrapper">
                     <table>
                         <tbody>
-                            {/* Render laps in descending order */}
                             {[...laps].reverse().map((lap, index) => (
                                 <tr key={index}>
                                     <td>{laps.length - index}</td>{" "}
-                                    {/* Show lap number in descending order */}
                                     <td>{formatTime(lap.time)}</td>
                                     <td>{formatTime(lap.diff)}</td>
                                 </tr>
                             ))}
 
-                            {/* Placeholder row at the end */}
                             {laps.length === 0 && (
                                 <tr>
                                     <td

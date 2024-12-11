@@ -4,9 +4,9 @@ import "./Navbar.css";
 
 const Navbar = () => {
     const [isDarkTheme, setIsDarkTheme] = useState(false);
-    const [isMenuOpen, setIsMenuOpen] = useState(false); // State to toggle menu visibility
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    // Load theme preference from localStorage on component mount
+    
     useEffect(() => {
         const storedTheme = localStorage.getItem("theme");
         if (storedTheme) {
@@ -19,7 +19,7 @@ const Navbar = () => {
         }
     }, []);
 
-    // Toggle theme and store preference in localStorage
+    // Light & Dark themes
     const toggleTheme = () => {
         setIsDarkTheme((prevTheme) => {
             const newTheme = !prevTheme;
@@ -34,7 +34,7 @@ const Navbar = () => {
         });
     };
 
-    // Toggle the mobile menu visibility
+    // Small Device Menu
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };

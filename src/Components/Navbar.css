@@ -1,7 +1,7 @@
 .navbar {
     width: 100%;
     height: 10vh;
-    background-color: var(--background-color); /* Default color, can be overridden */
+    background-color: var(--background-color); 
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -52,7 +52,7 @@
 
 
 
-/* Hamburger icon for mobile screens */
+/* ======== Small Device ==========  */
 .hamburger {
     display: none;
     font-size: var(--h1-font-size);
@@ -60,68 +60,65 @@
     margin-left: 20px;
 }
 
-/* Position the theme toggle button outside the nav menu */
 .theme-toggle-container {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/* Animation for nav links on mobile */
 .nav-links.slide-in {
     animation: slideIn 0.3s ease-out forwards;
 }
 
 @keyframes slideIn {
     from {
-        transform: translateX(100%); /* Start off-screen */
+        transform: translateX(100%); 
         opacity: 0;
     }
     to {
-        transform: translateX(0); /* Slide in to original position */
+        transform: translateX(0); 
         opacity: 1;
     }
 }
 
-/* Media query for responsiveness */
+/* Media Queries */
 @media screen and (max-width: 980px) {
     .navbar {
-        padding-inline: 2rem; /* Reduce padding on smaller screens */
+        padding-inline: 2rem; 
     }
 
     .nav-links {
-        display: none; /* Hide the nav links by default */
-        flex-direction: column; /* Stack the links vertically */
+        display: none; 
+        flex-direction: column; 
         align-items: flex-start;
         gap: 20px;
         position: absolute;
         top: 10vh;
         right: 0;
         background-color: var(--container-color);
-        width: 50%; /* Adjust width for better mobile layout */
+        width: 50%;
         padding: 1rem;
         box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
         z-index: 1;
     }
 
-    /* Show the nav links when the hamburger icon is clicked */
+    
     .nav-links.active {
         display: flex;
-        opacity: 1; /* Make the links visible */
-        animation: none; /* Remove animation once active */
+        opacity: 1; 
+        animation: none; 
     }   
 
-    /* Show the hamburger icon on mobile */
     .hamburger {
         display: block;
         font-size: 2rem;
     }
 
     .nav-link {
-        font-size: 1.2rem; /* Adjust link size for smaller screens */
+        font-size: 1.2rem; 
     }
 
     .theme-icon {
-        font-size: 1.5rem; /* Adjust theme icon size for smaller screens */
+        font-size: 1.5rem; 
     }
 }

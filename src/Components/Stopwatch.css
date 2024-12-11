@@ -1,10 +1,11 @@
+/* ========= Stopwatch - left ========= */
 .stopwatch-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 90vh;
     gap: 3rem;
-    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    flex-wrap: wrap; 
 }
 
 .stopwatch-left {
@@ -30,7 +31,7 @@
     max-width: 600px;
 }
 
-/* Stopwatch Time Display */
+
 .stop-watch-time {
     font-size: 4rem;
     font-weight: 700;
@@ -39,11 +40,11 @@
     text-shadow: 0px 2px 4px var(--first-color-alt);
 }
 
-/* Buttons Styling */
+
 .buttons {
     display: flex;
     gap: 1rem;
-    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+    flex-wrap: wrap; 
 }
 
 .buttons button {
@@ -56,7 +57,7 @@
     border-radius: 8px;
     cursor: pointer;
     transition: var(--transition);
-    min-width: 120px; /* Ensure buttons have a minimum width */
+    min-width: 120px; 
 }
 
 .buttons button:hover {
@@ -69,7 +70,7 @@
     cursor: not-allowed;
 }
 
-/* Laps Table */
+/* ========= Lap - right ========= */
 table {
     table-layout: fixed;
     width: 100%;
@@ -113,7 +114,6 @@ table tbody td {
     word-wrap: break-word;
 }
 
-/* Placeholder Row Styling */
 table tbody tr td {
     text-align: center;
     color: var(--text-color-light);
@@ -129,7 +129,6 @@ table tbody td {
     color: var(--text-color);
 }
 
-/* Scrollable Wrapper for Table */
 .stopwatch-right {
     width: 100%;
     max-width: 600px;
@@ -142,7 +141,6 @@ table tbody td {
     overflow-y: auto;
 }
 
-/* Scrollable Table Body */
 .table-body-wrapper {
     max-height: 250px;
     overflow-y: auto;
@@ -166,7 +164,7 @@ table tbody td {
     border-radius: 4px;
 }
 
-/* Responsive Styles */
+/* Responsive Styles : Tab */
 @media screen and (max-width: 768px) {
     .stop-watch-time {
         font-size: 3rem;
@@ -197,6 +195,7 @@ table tbody td {
     }
 }
 
+/* Responsive Styles : Mobile */
 @media screen and (max-width: 480px) {
     .stop-watch-time {
         font-size: 2.5rem;

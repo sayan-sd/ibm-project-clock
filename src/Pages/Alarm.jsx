@@ -4,39 +4,39 @@ import "../Components/alarm.css";
 
 const Alarm = () => {
     const [alarmDetails, setAlarmDetails] = useState([]);
-    const [activeAlarm, setActiveAlarm] = useState(null); // Tracks the ringing alarm
-    const [audioInstance, setAudioInstance] = useState(null); // Tracks the alarm sound instance
-    const [timers, setTimers] = useState([]); // Stores alarm timer IDs
-
+    const [activeAlarm, setActiveAlarm] = useState(null); 
+    const [audioInstance, setAudioInstance] = useState(null); instance
+    const [timers, setTimers] = useState([]); 
     const [hour, setHour] = useState("");
     const [minute, setMinute] = useState("");
 
+    // ======== Hour Change: <=12 ====================
     const handleHourChange = (event) => {
         const value = event.target.value;
 
         if (/^\d{0,2}$/.test(value)) {
-            // Allow up to 2 digits
             if (value === "" || (Number(value) >= 1 && Number(value) <= 12)) {
-                setHour(value); // Only update if within range
+                setHour(value); 
             } else if (value.length === 2 && value[0] === "0") {
-                setHour(value[1]); // Handle cases like "05" to "5"
+                setHour(value[1]);
             }
         }
     };
 
+    // ============= Minute Change: <= 59 ====================
     const handleMinuteChange = (event) => {
         const value = event.target.value;
 
         if (/^\d{0,2}$/.test(value)) {
-            // Allow up to 2 digits
             if (value === "" || (Number(value) >= 0 && Number(value) <= 59)) {
-                setMinute(value); // Only update if within range
+                setMinute(value); 
             } else if (value.length === 2 && value[0] === "0") {
-                setMinute(value[1]); // Handle cases like "09" to "9"
+                setMinute(value[1]); 
             }
         }
     };
 
+    // ============= Add Alarm ====================
     const submitHandler = (event) => {
         event.preventDefault();
 
@@ -46,7 +46,7 @@ const Alarm = () => {
         const am = event.target[2].checked;
         const pm = event.target[3].checked;
 
-        // Validate inputs: hour should not be greater than 12, and minutes should not be greater than 59
+        
         if (alarmHr < 1 || alarmHr > 12) {
             alert("Please enter a valid hour (1-12).");
             return;
@@ -56,55 +56,49 @@ const Alarm = () => {
             return;
         }
 
-        // Adjust alarmHr for 24-hour format
         if (pm && alarmHr !== 12) {
             alarmHr += 12;
         } else if (am && alarmHr === 12) {
-            alarmHr = 0; // Ensure 12 AM becomes 0
+            alarmHr = 0; 
         } else if (pm && alarmHr === 12) {
-            alarmHr = 12; // Ensure 12 PM stays as 12
+            alarmHr = 12; 
         }
 
-        // Current Time
         const date = new Date();
         const currentHr = date.getHours();
         const currentMin = date.getMinutes();
         const currentSec = date.getSeconds();
 
-        // Calculate Time Difference in seconds
         let diff =
             alarmHr * 3600 +
             alarmMin * 60 -
             (currentHr * 3600 + currentMin * 60 + currentSec);
 
         if (diff < 0) {
-            diff += 24 * 3600; // Adjust to next day if negative
+            diff += 24 * 3600; 
         }
 
-        // Format alarmTime for storage
         const alarmTime = {
-            hr: alarmHr === 0 ? 12 : alarmHr > 12 ? alarmHr - 12 : alarmHr, // Adjust back to 12-hour format for display
+            hr: alarmHr === 0 ? 12 : alarmHr > 12 ? alarmHr - 12 : alarmHr, 
             min: alarmMin,
             ampm: alarmHr >= 12 ? "PM" : "AM",
             enabled: true,
-            snoozed: false, // Default snoozed state
+            snoozed: false, 
         };
 
         setAlarmDetails([...alarmDetails, alarmTime]);
 
-        // Schedule the alarm
         scheduleAlarm(alarmTime, diff);
 
-        // Clear the inputs
         setHour("");
         setMinute("");
-        // Clear the form after setting the alarm
-        event.target[0].value = ""; // Clear hour input
-        event.target[1].value = ""; // Clear minute input
-        event.target[2].checked = false; // Uncheck AM radio button
-        event.target[3].checked = false; // Uncheck PM radio button
+        event.target[0].value = ""; 
+        event.target[1].value = ""; 
+        event.target[2].checked = false; 
+        event.target[3].checked = false; 
     };
 
+    // ============= New Alarm ====================
     const scheduleAlarm = (alarm, diff) => {
         const timerId = setTimeout(() => {
             triggerAlarm(alarm);
@@ -113,14 +107,14 @@ const Alarm = () => {
         setTimers([...timers, { alarm, timerId }]);
     };
 
+    // ============= Trigger Alarm ====================
     const triggerAlarm = (alarm) => {
-        setActiveAlarm(alarm); // Activate alarm
-        const audio = new Audio(alarmSound); // Create a new audio instance
-        audio.loop = true; // Enable looping for continuous ringing
+        setActiveAlarm(alarm); 
+        const audio = new Audio(alarmSound); 
+        audio.loop = true; 
         audio.play();
-        setAudioInstance(audio); // Store the audio instance
+        setAudioInstance(audio); 
 
-        // Disable the alarm after it rings
         setAlarmDetails((prevDetails) =>
             prevDetails.map((item) =>
                 item.hr === alarm.hr &&
@@ -132,15 +126,15 @@ const Alarm = () => {
         );
     };
 
+    // ============= Stop Alarm ====================
     const stopAlarm = () => {
         if (audioInstance) {
-            audioInstance.pause(); // Pause the audio
-            audioInstance.currentTime = 0; // Reset audio playback position
+            audioInstance.pause(); 
+            audioInstance.currentTime = 0; 
         }
-        setAudioInstance(null); // Clear the audio instance
-        setActiveAlarm(null); // Dismiss the active alarm
+        setAudioInstance(null); 
+        setActiveAlarm(null); 
 
-        // Set the alarm as disabled when stopped
         setAlarmDetails((prevDetails) =>
             prevDetails.map((item) =>
                 item.hr === activeAlarm.hr &&
@@ -152,19 +146,19 @@ const Alarm = () => {
         );
     };
 
+    // ============= Snooze Alarm ====================
     const snoozeAlarm = () => {
         if (audioInstance) {
-            audioInstance.pause(); // Pause the audio
-            audioInstance.currentTime = 0; // Reset audio playback position
+            audioInstance.pause(); 
+            audioInstance.currentTime = 0; 
         }
-        setAudioInstance(null); // Clear the audio instance
-        setActiveAlarm(null); // Dismiss notification
+        setAudioInstance(null); 
+        setActiveAlarm(null); 
 
-        // Schedule snoozed alarm for 5 minutes later
         const snoozeTime = 5 * 60 * 1000; // Snooze for 5 minutes
         const snoozeAlarm = {
             ...activeAlarm,
-            snoozed: true, // Mark as snoozed
+            snoozed: true, 
         };
 
         setAlarmDetails((prevDetails) =>
@@ -182,6 +176,7 @@ const Alarm = () => {
         }, snoozeTime);
     };
 
+    // ============= Toggle between states ====================
     const toggleAlarm = (index) => {
         const alarm = alarmDetails[index];
         setAlarmDetails((prevDetails) =>
@@ -205,12 +200,11 @@ const Alarm = () => {
                 (currentHr * 3600 + currentMin * 60 + currentSec);
 
             if (diff < 0) {
-                diff += 24 * 3600; // Adjust to next day if negative
+                diff += 24 * 3600; 
             }
 
             scheduleAlarm(alarm, diff);
         } else {
-            // Disable the alarm (cancel the timer)
             const timerToCancel = timers.find((t) => t.alarm === alarm);
             if (timerToCancel) {
                 clearTimeout(timerToCancel.timerId);
@@ -220,7 +214,6 @@ const Alarm = () => {
     };
 
     const cancelAlarm = (index) => {
-        // Cancel the timer for the alarm
         const timerToCancel = timers.find(
             (t) => t.alarm === alarmDetails[index]
         );
@@ -229,12 +222,12 @@ const Alarm = () => {
             setTimers(timers.filter((t) => t !== timerToCancel));
         }
 
-        // Remove the alarm from the list
         setAlarmDetails(alarmDetails.filter((_, i) => i !== index));
     };
 
     return (
         <div className="alarm-container">
+            // =========== Set New Alarm ========
             <form
                 action="#"
                 onSubmit={submitHandler}
@@ -294,6 +287,7 @@ const Alarm = () => {
                 </div>
             </form>
 
+            {/* ========== All New Alarms ========== */}
             <div className="alarm-list">
                 <h3 className="alarm-list-heading">Scheduled Alarms:</h3>
 
@@ -337,7 +331,7 @@ const Alarm = () => {
                 
             </div>
 
-            {/* Display active alarm notification */}
+            =========== Alarm notification popup =================
             {activeAlarm && (
                 <div className="notification">
                     <h3>Alarm Ringing!</h3>

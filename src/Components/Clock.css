@@ -69,15 +69,15 @@
     border-color: var(--first-color);
 }
 
-/* Responsive Styles */
+/* Responsive Styles: Tab */
 @media screen and (max-width: 768px) {
     .clock {
-        font-size: 150px; /* Smaller clock size on mobile */
+        font-size: 150px; 
         line-height: 150px;
     }
 
     .date-display {
-        font-size: 1.5rem; /* Smaller date size on mobile */
+        font-size: 1.5rem;
     }
 
     .navigation-buttons {
@@ -86,23 +86,23 @@
     }
 
     .nav-button {
-        font-size: 1rem; /* Smaller font size for buttons */
+        font-size: 1rem; 
         padding: 0.8rem 1.5rem;
     }
 }
 
 @media screen and (max-width: 480px) {
     .clock {
-        font-size: 120px; /* Even smaller clock size on very small screens */
+        font-size: 120px; 
         line-height: 120px;
     }
 
     .date-display {
-        font-size: 1.2rem; /* Further reduce date size on very small screens */
+        font-size: 1.2rem; 
     }
 
     .motivation-line {
-        font-size: 1.2rem; /* Slightly smaller motivation text */
+        font-size: 1.2rem; 
     }
 
     .navigation-buttons {
@@ -110,7 +110,7 @@
     }
 
     .nav-button {
-        font-size: 0.9rem; /* Further reduce button font size */
+        font-size: 0.9rem; 
         padding: 0.6rem 1.2rem;
     }
 }
