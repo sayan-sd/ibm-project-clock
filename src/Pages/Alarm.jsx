@@ -5,7 +5,7 @@ import "../Components/alarm.css";
 const Alarm = () => {
     const [alarmDetails, setAlarmDetails] = useState([]);
     const [activeAlarm, setActiveAlarm] = useState(null); 
-    const [audioInstance, setAudioInstance] = useState(null); instance
+    const [audioInstance, setAudioInstance] = useState(null);
     const [timers, setTimers] = useState([]); 
     const [hour, setHour] = useState("");
     const [minute, setMinute] = useState("");
@@ -227,7 +227,7 @@ const Alarm = () => {
 
     return (
         <div className="alarm-container">
-            // =========== Set New Alarm ========
+            {/* // =========== Set New Alarm ======== */}
             <form
                 action="#"
                 onSubmit={submitHandler}
@@ -331,7 +331,7 @@ const Alarm = () => {
                 
             </div>
 
-            =========== Alarm notification popup =================
+            {/* =========== Alarm notification popup =============== */}
             {activeAlarm && (
                 <div className="notification">
                     <h3>Alarm Ringing!</h3>
