@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import alarmSound from "../assets/alarm.mp3";
-import "../Components/alarm.css";
+import "../Components/Alarm.css";
 
 const Alarm = () => {
     const [alarmDetails, setAlarmDetails] = useState([]);
